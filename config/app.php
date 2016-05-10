@@ -149,6 +149,15 @@ return [
         Illuminate\View\ViewServiceProvider::class,
 
         /*
+         * 3rd Party Service Providers...
+         */
+        App\Providers\Db2ServiceProvider::class,
+        LaravelDoctrine\ORM\DoctrineServiceProvider::class,
+        LaravelDoctrine\Extensions\GedmoExtensionsServiceProvider::class,
+        LaravelDoctrine\Migrations\MigrationsServiceProvider::class,
+        LaravelDoctrine\ORM\Auth\Passwords\PasswordResetServiceProvider::class,
+
+        /*
          * Application Service Providers...
          */
         App\Providers\AppServiceProvider::class,
@@ -201,6 +210,13 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+
+        /*
+         * 3rd Party Facades...
+         */
+        'EntityManager' => LaravelDoctrine\ORM\Facades\EntityManager::class,
+        'Registry' => LaravelDoctrine\ORM\Facades\Registry::class,
+        'Doctrine' => LaravelDoctrine\ORM\Facades\Doctrine::class,
 
     ],
 
