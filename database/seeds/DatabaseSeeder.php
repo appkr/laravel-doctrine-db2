@@ -1,5 +1,7 @@
 <?php
 
+use App\Domain\Entities\Task;
+use App\Domain\Entities\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -11,6 +13,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
+        entity(User::class)->create();
+        entity(User::class)->create();
+        entity(User::class)->create();
+        entity(Task::class)->create(['name' => 'Task 1']);
+        entity(Task::class)->create(['name' => 'Task 2']);
+        entity(Task::class)->create(['name' => 'Task 3']);
     }
 }

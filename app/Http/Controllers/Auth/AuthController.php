@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
+use App\Domain\Entities\User;
+use App\Domain\ValueObjects\Name;
+use Doctrine\ORM\EntityManager;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -49,8 +51,9 @@ class AuthController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
+            'firstname' => 'required|max:255',
+            'lastname' => 'required|max:255',
+            'email' => 'required|email|max:255|unique:App\Domain\Entities\User,email',
             'password' => 'required|min:6|confirmed',
         ]);
     }
@@ -63,10 +66,16 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+        $user = new User(
+            new Name($data['firstname'], $data['lastname']),
+            $data['email']
+        );
+
+        $user->setPassword(bcrypt($data['password']));
+
+        \EntityManager::persist($user);
+        \EntityManager::flush();
+
+        return $user;
     }
 }

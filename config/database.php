@@ -46,9 +46,26 @@ return [
 
     'connections' => [
 
+        'db2' => [
+            'driver' => 'ibm_db2',
+            'protocol' => 'TCPIP',
+            'host' => env('DB_HOST', 'localhost'),
+            'port' => env('DB_PORT', 50000),
+            'user' => env('DB_USERNAME', 'db2inst1'),
+            'password' => env('DB_PASSWORD', ''),
+            'dbname' => env('DB_DATABASE', 'sample'),
+            'database' => env('DB_DATABASE', 'sample'),
+        ],
+
         'sqlite' => [
             'driver' => 'sqlite',
             'database' => env('DB_DATABASE', database_path('database.sqlite')),
+            'prefix' => '',
+        ],
+
+        'testing' => [
+            'driver' => 'sqlite',
+            'database' => ':memory:',
             'prefix' => '',
         ],
 

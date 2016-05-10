@@ -11,11 +11,27 @@
 |
 */
 
-$factory->define(App\User::class, function (Faker\Generator $faker) {
+use App\Domain\Entities\Task;
+use App\Domain\Entities\User;
+use App\Domain\Repositories\UserRepository;
+use App\Domain\ValueObjects\Name;
+use Faker\Generator;
+
+$factory->define(User::class, function (Generator $faker) {
     return [
-        'name' => $faker->name,
+        'name' => new Name($faker->firstName, $faker->lastName),
         'email' => $faker->safeEmail,
-        'password' => bcrypt(str_random(10)),
-        'remember_token' => str_random(10),
+        'password' => bcrypt('password'),
+        'remember_token' => str_random(60),
     ];
 });
+
+$factory->define(Task::class, function (Generator $faker) {
+    $users = app(UserRepository::class)->all();
+
+    return [
+        'name' => $faker->sentence,
+        'user' => $faker->randomElement(collect($users)->toArray())
+    ];
+});
+
