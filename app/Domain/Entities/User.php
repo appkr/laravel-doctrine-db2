@@ -54,11 +54,11 @@ class User implements AuthenticatableContract, CanResetPasswordContract, Authori
         if (count($args) === 1 and is_array($args[0])) {
             $this->name = $args[0]['name'];
             $this->email = $args[0]['email'];
-//            $this->password = $args[0]['password'];
+            $this->password = $args[0]['password'];
         } else {
             $this->name = $args[0];
             $this->email = $args[1];
-//            $this->password = $args[2];
+            $this->password = $args[2];
         }
     }
 
