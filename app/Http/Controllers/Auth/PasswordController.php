@@ -29,4 +29,21 @@ class PasswordController extends Controller
     {
         $this->middleware('guest');
     }
+
+    /**
+     * Reset the given user's password.
+     *
+     * @param  \Illuminate\Contracts\Auth\CanResetPassword  $user
+     * @param  string  $password
+     * @return void
+     */
+    protected function resetPassword($user, $password)
+    {
+        $user->setPassword(bcrypt($password));
+        $user->setRememberToken(str_random(60));
+        \EntityManager::persist($user);
+        \EntityManager::flush();
+
+        \Auth::guard($this->getGuard())->login($user);
+    }
 }
