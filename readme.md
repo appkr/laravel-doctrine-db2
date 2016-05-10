@@ -17,7 +17,7 @@ $ cp .env.example .env
 $ php artisan key:generate
 ```
 
-### 2. Create Database
+### 2. Create Database & Migration
 
 We assume mysql user is 'homestead'.
 
@@ -26,6 +26,11 @@ $ mysql -uroot -p
 mysql> CREATE DATABASE laravel_doctrine;
 mysql> GRANT ALTER, CREATE, INSERT, SELECT, DELETE, REFERENCES, UPDATE, DROP, EXECUTE, LOCK TABLES, INDEX ON laravel_doctrine.* TO 'homestead';
 mysql> FLUSH PRIVILEGES;
+mysql> quit
+```
+
+```sh
+$ php artisan doctrine:schema:create
 ```
 
 ### 3. Local Server
