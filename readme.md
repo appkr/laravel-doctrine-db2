@@ -129,6 +129,8 @@ CRUD|Tested|Tested
 User Registration|Tested|Tested
 User Authentication|Tested|Tested
 Password Reset|Tested|Tested
+Authorization|Not tested|Not tested
+Object Relationship|Not tested|Not tested
 
 Next step is to test Authorization and Object Relation, and exploit Doctrine usage.
 
