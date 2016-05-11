@@ -124,7 +124,7 @@ $ vendor/bin/phpunit
 Testing done against MySql/DB2. 
 
 Laravel-Doctrine|MySql|IBM DB2
----:---:---
+---|---|---
 CRUD|Tested|Tested
 User Registration|Tested|Tested
 User Authentication|Tested|Tested
