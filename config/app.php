@@ -151,11 +151,11 @@ return [
         /*
          * 3rd Party Service Providers...
          */
-        App\Providers\Db2ServiceProvider::class,
         LaravelDoctrine\ORM\DoctrineServiceProvider::class,
         LaravelDoctrine\Extensions\GedmoExtensionsServiceProvider::class,
         LaravelDoctrine\Migrations\MigrationsServiceProvider::class,
         LaravelDoctrine\ORM\Auth\Passwords\PasswordResetServiceProvider::class,
+        App\Providers\DB2ServiceProvider::class,
 
         /*
          * Application Service Providers...

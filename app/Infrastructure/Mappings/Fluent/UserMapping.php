@@ -31,7 +31,7 @@ class UserMapping extends EntityMapping
 //        $builder->embed(Name::class)->noPrefix();
         $builder->string('name');
         $builder->string('email');
-        $builder->string('password');
+        $builder->string('password')->length(60);
 
         $builder->rememberToken();
 

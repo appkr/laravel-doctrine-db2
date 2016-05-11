@@ -36,7 +36,7 @@ class User implements AuthenticatableContract, CanResetPasswordContract, Authori
     protected $name;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", unique=true)
      * @var string
      */
     protected $email;
@@ -71,7 +71,7 @@ class User implements AuthenticatableContract, CanResetPasswordContract, Authori
     }
 
     /**
-     * @return Name
+     * @return string
      */
     public function getName()
     {
