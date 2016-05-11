@@ -4,11 +4,30 @@ use App\Domain\Entities\Task;
 
 class ExampleTest extends TestCase
 {
+    protected $user;
+
     public function setUp()
     {
         parent::setUp();
 
         $this->artisan('doctrine:schema:create');
+        $this->createUser();
+    }
+
+    public function createUser()
+    {
+        $user = new \App\Domain\Entities\User(
+            'Foo',
+            'foo@bar.com',
+            bcrypt('password')
+        );
+
+        \EntityManager::persist($user);
+        \EntityManager::flush();
+
+        $this->user = $user;
+
+        return $this;
     }
 
     public function test_tasks_are_displayed_on_the_dashboard()
@@ -27,7 +46,8 @@ class ExampleTest extends TestCase
     {
         $this->visit('/')->dontSee('Task 1');
 
-        $this->visit('/')
+        $this->actingAs($this->user)
+            ->visit('/')
             ->type('Task 1', 'name')
             ->press('Add Task')
             ->see('Task 1');
@@ -35,7 +55,8 @@ class ExampleTest extends TestCase
 
     public function test_long_tasks_cant_be_created()
     {
-        $this->visit('/')
+        $this->actingAs($this->user)
+            ->visit('/')
             ->type(str_random(300), 'name')
             ->press('Add Task')
             ->see('Whoops!');

@@ -29,6 +29,12 @@ class Task implements Jsonable, Arrayable
     protected $name;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Domain\Entities\User", inversedBy="tasks")
+     * @var \App\Domain\Entities\User
+     */
+    protected $user;
+
+    /**
      * @param string $name
      */
     public function __construct($name)
@@ -58,6 +64,22 @@ class Task implements Jsonable, Arrayable
     public function setName($name)
     {
         $this->name = $name;
+    }
+
+    /**
+     * @return \App\Domain\Entities\User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param \App\Domain\Entities\User $user
+     */
+    public function setUser(\App\Domain\Entities\User $user)
+    {
+        $this->user = $user;
     }
 
     /**
