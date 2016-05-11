@@ -30,11 +30,11 @@ return [
                 app_path('Domain/Entities'),
             ],
             // Fluent Mappings
-            'mappings' => [
-                App\Infrastructure\Mappings\Fluent\TaskMapping::class,
-                App\Infrastructure\Mappings\Fluent\UserMapping::class,
+//            'mappings' => [
+//                App\Infrastructure\Mappings\Fluent\TaskMapping::class,
+//                App\Infrastructure\Mappings\Fluent\UserMapping::class,
 //                App\Infrastructure\Mappings\Fluent\NameMapping::class,
-            ],
+//            ],
             'repository' => Doctrine\ORM\EntityRepository::class,
             'proxies' => [
                 'namespace' => false,
@@ -79,6 +79,9 @@ return [
             */
             'mapping_types' => [
                 //'enum' => 'string'
+                'vargraphic' => 'text',
+                'graphic' => 'string',
+                'xml' => 'text',
             ],
         ],
     ],

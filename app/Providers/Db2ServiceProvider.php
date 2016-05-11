@@ -5,7 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use LaravelDoctrine\ORM\Configuration\Connections\ConnectionManager;
 
-class Db2ServiceProvider extends ServiceProvider
+class DB2ServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.
@@ -14,10 +14,8 @@ class Db2ServiceProvider extends ServiceProvider
      */
     public function boot(ConnectionManager $connections)
     {
-        $connections->extend('db2', function (Application $app) {
-            return [
-                'url' => 'db2://db2inst1:password@localhost/sample'
-            ];
+        $connections->extend('ibm_db2', function ($settings, \Illuminate\Foundation\Application $app) {
+            return $settings;
         });
     }
 
