@@ -3,8 +3,11 @@
 namespace App\Providers;
 
 use App\Domain\Entities\Task;
+use App\Domain\Entities\User;
 use App\Domain\Repositories\TaskRepository;
+use App\Domain\Repositories\UserRepository;
 use App\Infrastructure\Repositories\DoctrineTaskRepository;
+use App\Infrastructure\Repositories\DoctrineUserRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
@@ -34,6 +37,13 @@ class AppServiceProvider extends ServiceProvider
             return new DoctrineTaskRepository(
                 $app->make('em'),
                 new ClassMetadata(Task::class)
+            );
+        });
+
+        $this->app->bind(UserRepository::class, function (Application $app) {
+            return new DoctrineUserRepository(
+                $app->make('em'),
+                new ClassMetadata(User::class)
             );
         });
 

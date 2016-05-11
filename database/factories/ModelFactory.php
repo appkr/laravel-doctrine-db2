@@ -21,8 +21,11 @@ $factory->define(App\Domain\Entities\User::class, function (Faker\Generator $fak
 });
 
 $factory->define(App\Domain\Entities\Task::class, function (Faker\Generator $faker) {
+    $users = app(App\Domain\Repositories\UserRepository::class)->all();
+
     return [
         'name' => $faker->sentence,
+        'user' => $faker->randomElement(collect($users)->toArray())
     ];
 });
 

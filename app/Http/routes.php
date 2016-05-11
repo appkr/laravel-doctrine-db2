@@ -44,50 +44,58 @@ Route::get('/task/{id}', function ($id, TaskRepository $repository) {
 /**
  * Testing Model Update & Persistence (UPDATE)
  */
-Route::get('/task/{id}/update', function ($id, TaskRepository $repository, EntityManagerInterface $em) {
+Route::get('/task/{id}/update', ['middleware' => 'auth', function ($id, TaskRepository $repository, EntityManagerInterface $em) {
     $task = $repository->find($id);
+
+    // Testing Authoriztion
+    if (Gate::denies('update', $task)) {
+        abort(403);
+    }
+
     $task->setName('Modified ' . $task->getName());
     $em->persist($task);
     $em->flush();
 
     return response()->json($task->toArray(), 200, [], JSON_PRETTY_PRINT);
-});
+}]);
 
 /**
  * Testing Model Creating & Persistence (CREATE)
  */
-Route::post('/task', function (Request $request, EntityManagerInterface $em) {
+Route::post('/task', ['middleware' => 'auth', function (Request $request, EntityManagerInterface $em) {
     $validator = Validator::make($request->all(), [
         'name' => 'required|max:255',
     ]);
 
     if ($validator->fails()) {
-        return redirect('/')
-            ->withInput()
-            ->withErrors($validator);
+        return redirect('/')->withInput()->withErrors($validator);
     }
 
-    $task = new Task(
-        $request->get('name')
-    );
+    $task = new Task($request->get('name'));
+    $task->setUser(auth()->user());
 
     $em->persist($task);
     $em->flush();
 
     return redirect('/');
-});
+}]);
 
 /**
  * Testing Model Deletion & Persistence (DELETE)
  */
-Route::delete('/task/{id}', function ($id, TaskRepository $repository, EntityManagerInterface $em) {
+Route::delete('/task/{id}', ['middleware' => 'auth', function ($id, TaskRepository $repository, EntityManagerInterface $em) {
     $task = $repository->find($id);
+
+    // Testing Authoriztion
+    if (Gate::denies('delete', $task)) {
+        abort(403);
+    }
 
     $em->remove($task);
     $em->flush();
 
     return redirect('/');
-});
+}]);
 
 /**
  * Testing Laravel-Doctrine provided example

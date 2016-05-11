@@ -5,13 +5,14 @@ namespace App\Domain\Entities;
 use Doctrine\ORM\Mapping as ORM;
 use App\Domain\ValueObjects\Name;
 use App\Domain\ValueObjects\Email;
-use LaravelDoctrine\ORM\Auth\Authenticatable;
+use Doctrine\Common\Collections\ArrayCollection;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Foundation\Auth\Access\Authorizable;
-use LaravelDoctrine\Extensions\Timestamps\Timestamps;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use LaravelDoctrine\Extensions\Timestamps\Timestamps;
+use LaravelDoctrine\ORM\Auth\Authenticatable;
 
 /**
  * @ORM\Entity()
@@ -47,6 +48,15 @@ class User implements AuthenticatableContract, CanResetPasswordContract, Authori
      */
     protected $password;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Domain\Entities\Task", mappedBy="user", cascade={"persist"})
+     * @var ArrayCollection|\App\Domain\Entities\Task[]
+     */
+    protected $tasks;
+
+    /**
+     * User constructor.
+     */
     public function __construct()
     {
         $args = func_get_args();
@@ -100,5 +110,24 @@ class User implements AuthenticatableContract, CanResetPasswordContract, Authori
     public function setEmail($email)
     {
         $this->email = $email;
+    }
+
+    /**
+     * @param \App\Domain\Entities\Task $task
+     */
+    public function addTask(\App\Domain\Entities\Task $task)
+    {
+        if (! $this->tasks->contains($task)) {
+            $task->setUser($this);
+            $this->tasks->add($task);
+        }
+    }
+
+    /**
+     * @return ArrayCollection|\App\Domain\Entities\Task
+     */
+    public function getTasks()
+    {
+        return $this->tasks;
     }
 }
