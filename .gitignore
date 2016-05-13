@@ -1,6 +1,11 @@
+.idea
+.DS_Store
 /vendor
 /node_modules
 /public/storage
 Homestead.yaml
 Homestead.json
 .env
+.phpstorm.meta.php
+_ide_helper.php
+reference.md

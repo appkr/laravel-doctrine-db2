@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql'),
+   'default' => env('DB_CONNECTION', 'mysql'),
 
     /*
     |--------------------------------------------------------------------------
@@ -50,7 +50,7 @@ return [
             'driver' => 'ibm_db2',
             'protocol' => 'TCPIP',
             'host' => env('DB_HOST', 'localhost'),
-            'port' => env('DB_PORT', 50000),
+//            'port' => env('DB_PORT', 50000),
             'user' => env('DB_USERNAME', 'db2inst1'),
             'password' => env('DB_PASSWORD', ''),
             'dbname' => env('DB_DATABASE', 'sample'),
